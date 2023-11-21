@@ -329,7 +329,7 @@ pub fn parse_burn_to_icp(entry: &EventEntry) -> Result<ethabi::Log, String> {
         },
     ];
     let burn_to_icp = Event {
-        name: "BurnToIcp".to_string(),
+        name: "BurnToOgy".to_string(),
         inputs: params,
         anonymous: false,
     };
@@ -364,7 +364,7 @@ pub fn parse_burn_to_icp_account_id(entry: &EventEntry) -> Result<ethabi::Log, S
         },
     ];
     let burn_to_icp_account_id = Event {
-        name: "BurnToIcpAccountId".to_string(),
+        name: "BurnToOgyAccountId".to_string(),
         inputs: params,
         anonymous: false,
     };
@@ -402,7 +402,7 @@ impl std::fmt::Display for BurnEvent {
             BurnToIcp(account, amount) => {
                 write!(
                     f,
-                    "BurnToIcp(Account {{ principal: {}, subaccount: {}}}, {})",
+                    "BurnToOgy(Account {{ principal: {}, subaccount: {}}}, {})",
                     account.owner,
                     account
                         .subaccount
@@ -414,7 +414,7 @@ impl std::fmt::Display for BurnEvent {
             BurnToIcpAccountId(account_id, amount) => {
                 write!(
                     f,
-                    "BurnToIcpAccountId({}, {})",
+                    "BurnToOgyAccountId({}, {})",
                     hex::encode(account_id),
                     amount
                 )

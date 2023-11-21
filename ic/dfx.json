@@ -20,15 +20,8 @@
     },
     "ethrpc": {
       "type": "custom",
-      "wasm": "",
-      "candid": "ic-eth-rpc.did",
-      "remote": {
-        "candid": "ic-eth-rpc.did",
-        "id": {
-          "ic": "zdciv-4iaaa-aaaab-aadoa-cai",
-          "local": "bw4dl-smaaa-aaaaa-qaacq-cai"
-        }
-      }
+      "wasm": "evm_rpc_opt.wasm",
+      "candid": "ic-eth-rpc.did"
     }
   },
   "output_env_file": ".env",

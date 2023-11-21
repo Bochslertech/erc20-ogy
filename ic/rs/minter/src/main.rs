@@ -371,8 +371,8 @@ async fn eth_rpc_call(
         config.eth_rpc_canister_id,
         "json_rpc_request",
         (
-            json_rpc_payload.to_string(),
             config.eth_rpc_service_url.clone(),
+            json_rpc_payload.to_string(),
             config.max_response_bytes,
         ),
         candid::encode_args,
@@ -417,6 +417,7 @@ pub async fn process_block(block_hash: String) -> Result<(), ReturnError> {
     let json_rpc_payload = json!({
         "jsonrpc":"2.0",
         "method":"eth_getLogs",
+        "id": 1,
         "params":[{
             "address": config.ckicp_eth_erc20_address,
             "blockHash": block_hash,
@@ -488,6 +489,7 @@ pub async fn sync_event_logs() -> Result<(), ReturnError> {
     let json_rpc_payload = json!({
         "jsonrpc":"2.0",
         "method":"eth_getLogs",
+        "id": 1,
         "params":[{
             "address": config.ckicp_eth_erc20_address,
             "fromBlock": format!("{:#x}", state.last_block + 1),
@@ -525,6 +527,7 @@ pub async fn sync_event_logs() -> Result<(), ReturnError> {
                 let json_rpc_payload = json!({
                     "jsonrpc":"2.0",
                     "method":"eth_blockNumber",
+                    "id": 1,
                     "params":[]
                 });
                 let result =
@@ -794,6 +797,18 @@ pub fn get_funding_account() -> String {
 pub fn get_tecdsa_signer_address_hex() -> String {
     let state: CkicpState = get_ckicp_state();
     hex_encode(&state.tecdsa_signer_address)
+}
+
+#[query]
+pub fn get_principal_slice_hex() -> String {
+    let caller = ic_cdk::caller();
+    let slice = caller.as_slice();
+    let mut xx = vec![slice.len() as u8];
+    xx.extend_from_slice(slice);
+    while xx.len() < 32 {
+        xx.push(0);
+    }
+    hex_encode(&xx)
 }
 
 fn main() {}

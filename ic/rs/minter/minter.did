@@ -95,4 +95,5 @@ service : () -> {
   set_ckicp_config : (CkicpConfig) -> (Result_1);
   update_ckicp_state : () -> (Result_1);
   view_debug_log : (LogView) -> (vec text) query;
+  get_principal_slice_hex : () -> (text) query;
 }
